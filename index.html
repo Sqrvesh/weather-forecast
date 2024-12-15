@@ -4,42 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Chennai, TamilNadu</h1>
-  <div class="date js-date"></div>
-  
-  <div class="weather-main-info">
-    <div class="weather-description-container">
-      <div class="weather-description js-weather-description"></div>
-      <div class=" weather-image-div js-weather-image-div"></div>
-    </div>
-    <div>
-      <div class="temp js-temp"></div>
-      <div class="speed-container">
-        <div class="js-wind-speed"></div>
-        <div class="feelslike-temp js-feelslike-temp"></div>
+
+  <h1>Weather App</h1>
+
+  <div class="main-row-flex">
+    <div class="current-weather-info">
+      <div class="current-info-text">
+        <div class="current-location">Chennai</div>
+        <div class="current-date js-current-date">Sun Dec 15 2024</div>
+        <div class="current-temp js-current-temp"></div>
+        <div class="current-feelslike-temp js-current-feelslike-temp"></div>
+        <div class="current-speed js-current-speed"></div>
+      </div>
+      <div class="current-info-weather">
+        <div class="current-weather-image-div js-current-weather-image-div"></div>
+        <div class="current-weather-description js-current-weather-description"></div>
       </div>
     </div>
+    <div class="hourly-weather js-hourly-weather"></div>
   </div>
-
-  <div class="hourly-weather">
-    <div class="hourly-weather-card">
-      <div class="hourly-weather-card-text">6:00AM</div>
-      <div class="hourly-weather-card-icon-div"><img class="hourly-weather-card-icon" src="http://openweathermap.org/img/wn/02d@2x.png" alt=""></div>
-      <div class="hourly-weather-card-temp">25°C</div>
-    </div>
-    <div class="hourly-weather-card">
-      <div class="hourly-weather-card-text">6:00AM</div>
-      <div class="hourly-weather-card-icon-div"><img class="hourly-weather-card-icon" src="http://openweathermap.org/img/wn/02d@2x.png" alt=""></div>
-      <div class="hourly-weather-card-temp">25°C</div>
-    </div>
-  </div>
-
-  <div class="daily-weather-card-flex js-daily-weather-card-flex"></div>
   
-
+  <div class="daily-weather js-daily-weather"></div>
 
   <script src="script.js"></script>
 </body>
