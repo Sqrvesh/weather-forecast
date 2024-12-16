@@ -107,10 +107,10 @@ function genHourlyweather(hourly, weatherDescriptions) {
   const currentTimeHours = new Date().getHours() > 12 ? `${Number(new Date().getHours()) - 12}:00PM` : `${new Date().getHours()}:00AM`;
   const timeArray = hourly.time.map((t) => t.getHours() > 12 ? `${Number(t.getHours()) - 12}:00PM` : `${t.getHours()}:00AM`).slice(1, 32);
   const currentTimeIndex = timeArray.indexOf(currentTimeHours);
-  const weatherCodeArray = hourly.weatherCode.slice(currentTimeIndex+1, currentTimeIndex+8);
-  const temperatureArray = hourly.temperature.slice(currentTimeIndex+1, currentTimeIndex+8);
-  const isDayArray = hourly.isDay.slice(currentTimeIndex+1, currentTimeIndex+8);
-  timeArray.slice(currentTimeIndex, currentTimeIndex+7).forEach((time, index) => {
+  const weatherCodeArray = hourly.weatherCode.slice(currentTimeIndex+1, currentTimeIndex+10);
+  const temperatureArray = hourly.temperature.slice(currentTimeIndex+1, currentTimeIndex+10);
+  const isDayArray = hourly.isDay.slice(currentTimeIndex+1, currentTimeIndex+10);
+  timeArray.slice(currentTimeIndex, currentTimeIndex+9).forEach((time, index) => {
     const isDay = isDayArray[index] ? 'day' : 'night';
     const weatherDescription = weatherDescriptions[Number(weatherCodeArray[index])][isDay];
     time = (time === '0:00AM') ? '12:00AM' : time;
@@ -139,6 +139,5 @@ async function displayContent() {
 
 displayContent();
 
- // notes for future me: theres litteraly a is day night option thing from the api stop doing weird conditional checks
-  // - figure out geolocation api
-  // - make a damn title for the webpage like "weather app" or some bs i can't think shit rn
+ 
+// figure out geolocation api
