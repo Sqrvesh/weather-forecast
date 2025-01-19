@@ -1,5 +1,44 @@
+let latitude = 0;
+let longitude = 0;
+let place = "";
+
+function getLocation() {
+  navigator.geolocation.getCurrentPosition(showPosition, showError);
+}
+
+function showPosition(pos) {
+  latitude = pos.coords.latitude;
+  longitude = pos.coords.longitude;
+  reverseGeocode();
+}
+
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      console.log("User denied the request for Geolocation.")
+      break;
+    case error.POSITION_UNAVAILABLE:
+      console.log("Location information is unavailable.")
+      break;
+    case error.TIMEOUT:
+      console.log("The request to get user location timed out.")
+      break;
+    case error.UNKNOWN_ERROR:
+      console.log("An unknown error occurred.")
+      break;
+  }
+}
+
+async function reverseGeocode() {
+  const responseObj = await fetch(`https://nominatim.openstreetmap.org/reverse?format=geojson&lat=${latitude}&lon=${longitude}`);
+  console.log(latitude, longitude);
+  const raw = await responseObj.json();
+  place = raw.features[0].properties.address.suburb;
+  displayContent();
+}
+
 async function loadWeatherData() {
-  const responseObj = await fetch("https://api.open-meteo.com/v1/forecast?latitude=13.0878&longitude=80.2785&current=temperature_2m,apparent_temperature,is_day,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,uv_index_max&timezone=auto&timeformat=unixtime");
+  const responseObj = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,is_day,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,uv_index_max&timezone=auto&timeformat=unixtime`);
   const weatherDataRaw = await responseObj.json();
   const current = weatherDataRaw.current;
   const daily = weatherDataRaw.daily;
@@ -49,6 +88,7 @@ async function loadWeatherDescriptions() {
 function genCurrentWeather(current, weatherDescriptions) {
   const dayNight = current.isDay ? 'day' : 'night';
   const weatherDescription = weatherDescriptions[Number(current.weatherCode)][dayNight];
+  document.querySelector('.js-current-location').innerHTML  = place;
   document.querySelector('.js-current-date').innerHTML = current.time.toDateString();
   document.querySelector('.js-current-temp').innerHTML = `${current.temperature}&deg;C`;
   document.querySelector('.js-current-feelslike-temp').innerHTML = `feels like ${current.apparentTemperature}&deg;C`;
@@ -140,7 +180,4 @@ async function displayContent() {
   document.querySelector('.js-hourly-weather').innerHTML = genHourlyweather(hourly, weatherDescriptions);
 }
 
-displayContent();
-
- 
-// figure out geolocation api
+getLocation();
