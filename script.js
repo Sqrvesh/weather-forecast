@@ -105,12 +105,15 @@ function genDailyWeatherCard(dailyData, weatherDescriptions) {
 function genHourlyweather(hourly, weatherDescriptions) {
   let html = '';
   const currentTimeHours = new Date().getHours() > 12 ? `${Number(new Date().getHours()) - 12}:00PM` : `${new Date().getHours()}:00AM`;
-  const timeArray = hourly.time.map((t) => t.getHours() > 12 ? `${Number(t.getHours()) - 12}:00PM` : `${t.getHours()}:00AM`).slice(1, 32);
+  const timeArray = hourly.time.map((t) => t.getHours() > 12 ? `${Number(t.getHours()) - 12}:00PM` : `${t.getHours()}:00AM`).slice(1, 51);
   const currentTimeIndex = timeArray.indexOf(currentTimeHours);
-  const weatherCodeArray = hourly.weatherCode.slice(currentTimeIndex+1, currentTimeIndex+10);
-  const temperatureArray = hourly.temperature.slice(currentTimeIndex+1, currentTimeIndex+10);
-  const isDayArray = hourly.isDay.slice(currentTimeIndex+1, currentTimeIndex+10);
-  timeArray.slice(currentTimeIndex, currentTimeIndex+9).forEach((time, index) => {
+  const weatherCodeArray = hourly.weatherCode.slice(currentTimeIndex+1, currentTimeIndex+28);
+  const temperatureArray = hourly.temperature.slice(currentTimeIndex+1, currentTimeIndex+28);
+  const isDayArray = hourly.isDay.slice(currentTimeIndex+1, currentTimeIndex+28);
+  timeArray.slice(currentTimeIndex, currentTimeIndex+27).forEach((time, index) => {
+    if (index % 3 != 0) {
+      return;
+    }
     const isDay = isDayArray[index] ? 'day' : 'night';
     const weatherDescription = weatherDescriptions[Number(weatherCodeArray[index])][isDay];
     time = (time === '0:00AM') ? '12:00AM' : time;

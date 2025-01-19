@@ -32,7 +32,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: end;
-  column-gap: 38px;
+  column-gap: 16px;
 }
 
 .current-weather-info {
